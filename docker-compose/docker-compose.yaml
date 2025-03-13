@@ -1,0 +1,53 @@
+services:
+  postgresdb:
+    image: postgres
+    environment:
+      POSTGRES_USER: chat_app
+      POSTGRES_PASSWORD: chat_app
+      POSTGRES_DB: chat_app
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=chat_app
+      - MONGO_INITDB_ROOT_PASSWORD=chat_app
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=chat_app
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=chat_app
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    depends_on:
+      - mongodb
+  redis:
+    image: redis:7
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "61613:61613"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    command: >
+      sh -c "rabbitmq-plugins enable rabbitmq_web_stomp && rabbitmq-server"
+    restart: unless-stopped
+volumes:
+  pgdata:
+  mongo:
+  redis-data:
+  rabbitmq_data:
