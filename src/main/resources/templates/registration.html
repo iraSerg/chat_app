@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Registration</h3>
+                    <div th:if="${errorMessage}" class="card-footer text-center py-3">
+                        <p class="text-danger" th:text="${errorMessage}"></p>
+                    </div>
+                    <form th:action="@{/registration}" th:object="${user}" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input th:field="*{name}" type="text" id="name" name="name"
+                                   placeholder="Enter your full name" class="form-control"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input th:field="*{email}" type="email" id="email" name="email"
+                                   placeholder="Enter your email address" class="form-control"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input th:field="*{username}" name="username" type="text" id="username"
+                                   placeholder="Choose a username" class="form-control"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input th:field="*{password}" type="password" id="password" name="password"
+                                   placeholder="Enter a password" class="form-control"/>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+                <div th:if="${errors}" class="card-footer text-center py-3">
+                    <ul class="list-unstyled">
+                        <li class="text-danger" th:each="error : ${errors}"
+                            th:text="${error.field + ': ' + error.defaultMessage}"></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

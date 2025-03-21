@@ -1,0 +1,29 @@
+app:
+  image:
+    bucket: src\main\resources\images
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chat_app
+    username: chat_app
+    password: chat_app
+  data:
+    mongodb:
+      uri: mongodb://chat_app:chat_app@localhost:27017/chat_app?authSource=admin
+    redis:
+      host: localhost
+      port: 6379
+  rabbitmq:
+    host: localhost
+    port: 5672
+  mail:
+    host: smtp.gmail.com
+    username: MAIL_USERNAME
+    password: MAIL_PASSWORD
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
